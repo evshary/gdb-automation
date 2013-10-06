@@ -28,10 +28,17 @@ c
 echo test1:send Happy!\n
 set $strptr = "Happy!"
 set $i = 0
-print $i
 while($strptr[$i] != '\0')
 	call Send($strptr[$i])
 	set $i=$i+1
 end
 echo test1:Finished\n
+echo test2:Test the greeting\n
+set $strptr = "Hello!"
+set $i = 0
+while($strptr[$i] == greeting[$i] && $strptr[$i] != '\0')
+	call Send(greeting[$i])
+	set $i=$i+1
+end
+echo test2:Finished\n
 quit
