@@ -23,9 +23,11 @@ set ((USART_InitTypeDef*)$osp)->USART_Mode = USART_Mode_Rx | USART_Mode_Tx
 call USART_Init(USART2, $osp)
 call USART_Cmd(USART2, ENABLE)
 c
+echo test1:send Hello!
 call USART_SendData(USART2, 'H')
 call USART_SendData(USART2, 'e')
 call USART_SendData(USART2, 'l')
 call USART_SendData(USART2, 'l')
 call USART_SendData(USART2, 'o')
 call USART_SendData(USART2, '!')
+echo test1:Finished
