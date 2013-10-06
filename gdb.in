@@ -1,8 +1,10 @@
+macro define Send(data) USART_SendData(USART2, data)
+
 file main.elf
 target remote :3333
 set $osp = $sp
 set $sp = $sp - 16
-b main.c:4
+b main.c:6
 c
 call RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_AFIO, ENABLE)
 call RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE)
@@ -23,11 +25,13 @@ set ((USART_InitTypeDef*)$osp)->USART_Mode = USART_Mode_Rx | USART_Mode_Tx
 call USART_Init(USART2, $osp)
 call USART_Cmd(USART2, ENABLE)
 c
-echo test1:send Hello!
-call USART_SendData(USART2, 'H')
-call USART_SendData(USART2, 'e')
-call USART_SendData(USART2, 'l')
-call USART_SendData(USART2, 'l')
-call USART_SendData(USART2, 'o')
-call USART_SendData(USART2, '!')
-echo test1:Finished
+echo test1:send Happy!\n
+set $strptr = "Happy!"
+set $i = 0
+print $i
+while($strptr[$i] != '\0')
+	call Send($strptr[$i])
+	set $i=$i+1
+end
+echo test1:Finished\n
+quit
